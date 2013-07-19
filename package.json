@@ -1,0 +1,23 @@
+{
+  "name": "maximize",
+  "version": "0.0.1",
+  "author": "Chase Douglas <chasedouglas@gmail.com>",
+  "description": "Unobfuscate and beautify obfuscated/minified JavaScript code with source maps",
+  "contributors": [
+    {
+      "name": "Chase Douglas",
+      "email": "chasedouglas@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/txase/maximize.git"
+  },
+  "dependencies": {
+    "argparse": "*",
+    "falafel": "*",
+    "js-beautify": "*",
+    "seq": "*",
+    "source-map": "*"
+  }
+}
