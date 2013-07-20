@@ -18,6 +18,10 @@ and the generated
 [maximized script](https://gist.github.com/txase/6043177#file-maximized-script)
 from http://dev.fontdragr.com.
 
+## Installation
+`npm install -g maximize`
+
+## Usage
 ```
 usage: maximize.js [-h] [-b BEAUTIFY_OPTS] url
 
