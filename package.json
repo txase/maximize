@@ -9,6 +9,9 @@
       "email": "chasedouglas@gmail.com"
     }
   ],
+  "bin": {
+    "maximize": "./maximize.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/txase/maximize.git"
