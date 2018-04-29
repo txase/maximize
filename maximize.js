@@ -123,20 +123,36 @@ Seq()
     });
   })
   .seq('process', function(map) {
+    var sourceName='';
     var deobfuscated = falafel(this.vars.code, {locations: true}, function(node) {
       var orig;
-      if (node.id) {
+       if (node.id) {
         orig = map.originalPositionFor({line: node.id.loc.start.line, column: node.id.loc.start.column});
-        if (orig.name)
-          node.id.update(orig.name);
+        if (orig.name) {
+          if(sourceName!=orig.source) {
+              sourceName=orig.source;
+              node.id.update(orig.name +'/*'+orig.source+'*/');
+            } else {
+              node.id.update(orig.name);
+            }
+          }
       } else if (node.type === 'Identifier') {
         orig = map.originalPositionFor({line: node.loc.start.line, column: node.loc.start.column});
-        if (orig.name)
-          node.update(orig.name);
+        if (orig.name) {
+          if(sourceName!=orig.source) {
+            sourceName=orig.source;
+            node.update(orig.name +'/*'+orig.source+'*/');
+          } else {
+             node.update(orig.name);
+          }
+        }
       }
     });
 
     var beautified = beautify(deobfuscated.toString(), args.beautify_opts);
+    var re = /^(.*)(\/\*[a-z0-9\-_\/\.]+\*\/)(.*)$/igm;
+    beautified = beautified.replace(re,'\r\n\r\n\r\n\r\n/**************************************************************/\r\n\r\n$2\r\n\r\n$1$3');
+
     console.log(beautified);
   })
   ['catch'](function(err, stage) {
