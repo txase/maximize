@@ -45,6 +45,7 @@ Seq()
     fetch.call(this, args.url[0]);
   })
   .seq('code', function(res) {
+    var ended = false;
     var self = this;
 
     if (res.statusCode < 200 || res.statusCode > 300) {
@@ -66,11 +67,15 @@ Seq()
         self.ok(code, res.headers['X-SourceMap']);
       else
         self.ok(code);
+
+      ended = true;
     });
 
     res.on('close', function() {
-      console.error('Failed to retrieve entire script');
-      process.exit(-1);
+      if (!ended) {
+        console.error('Failed to retrieve entire script');
+        process.exit(-1);
+      }
     });
   })
   .seq('mapUrl', function(code, mapUrl) {
@@ -101,6 +106,7 @@ Seq()
   })
   .seq('fetch_map', fetch)
   .seq('map', function(res) {
+    var ended = false;
     var self = this;
 
     if (res.statusCode < 200 || res.statusCode > 300) {
@@ -115,11 +121,15 @@ Seq()
 
     res.on('end', function() {
       self.ok(new sourceMap.SourceMapConsumer(Buffer.concat(data).toString()));
+
+      ended = true;
     });
 
     res.on('close', function() {
-      console.error('Failed to retrieve entire source map');
-      process.exit(-1);
+      if (!ended) {
+        console.error('Failed to retrieve entire source map');
+        process.exit(-1);
+      }
     });
   })
   .seq('process', function(map) {
