@@ -133,7 +133,7 @@ Seq()
     });
   })
   .seq('process', function(map) {
-    var deobfuscated = falafel(this.vars.code, {loc: true}, function(node) {
+    var deobfuscated = falafel(this.vars.code, {ecmaVersion: 8, locations: true}, function(node) {
       var orig;
       if (node.id) {
         orig = map.originalPositionFor({line: node.id.loc.start.line, column: node.id.loc.start.column});
