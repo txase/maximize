@@ -32,7 +32,7 @@ function fetch(src) {
       http.get(src, this.ok).on('error', this);
       break;
     case 'https:':
-      http.get(src, this.ok).on('error', this);
+      https.get(src, this.ok).on('error', this);
       break;
     default:
       console.error('Bad URL: URL must be an HTTP(S) resource');
