@@ -8,7 +8,7 @@ var ArgumentParser = require('argparse').ArgumentParser;
 var falafel = require('falafel');
 var beautify = require('js-beautify');
 var Seq = require('seq');
-var sourceMap = require('source-map');
+var SourceMapConsumer = require('source-map').SourceMapConsumer;
 
 var parser = new ArgumentParser({
   addHelp: true,
@@ -120,7 +120,7 @@ Seq()
     });
 
     res.on('end', function() {
-      self.ok(new sourceMap.SourceMapConsumer(Buffer.concat(data).toString()));
+      SourceMapConsumer.with(Buffer.concat(data).toString(), null, self.ok);
 
       ended = true;
     });
